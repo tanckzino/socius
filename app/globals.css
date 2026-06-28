@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #2350E8;
+  --color-brand-blue-light: #4169FF;
+  --color-brand-blue-dark: #1A3DB5;
+  --color-brand-green: #10BE72;
+  --color-brand-green-light: #1FE088;
+  --color-brand-dark: #0D0D0D;
+  --color-brand-surface: #111111;
+  --color-brand-surface-2: #1A1A1A;
+  --color-brand-surface-3: #252525;
+  --color-brand-border: #222222;
+  --color-brand-text: #F5F5F5;
+  --color-brand-muted: #888888;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-pulse-slow: pulse 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes swipeRight {
+  to { transform: translateX(150%) rotate(20deg); opacity: 0; }
+}
+
+@keyframes swipeLeft {
+  to { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0D0D0D;
+  color: #F5F5F5;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2350E8;
+}
+
+::selection {
+  background: #2350E8;
+  color: #fff;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #2350E8 0%, #10BE72 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #4169FF, #2350E8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glow-blue {
+  box-shadow: 0 0 60px rgba(35, 80, 232, 0.25), 0 0 120px rgba(35, 80, 232, 0.12);
+}
+
+.glow-green {
+  box-shadow: 0 0 40px rgba(16, 190, 114, 0.2);
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(35,80,232,0.2);
+}
+
+.swipe-card {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.swipe-card:active {
+  cursor: grabbing;
+}
+
+.animate-swipe-right {
+  animation: swipeRight 0.4s ease-out forwards;
+}
+.animate-swipe-left {
+  animation: swipeLeft 0.4s ease-out forwards;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #1A1A1A 25%, #252525 50%, #1A1A1A 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.hero-glow {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(35, 80, 232, 0.18) 0%, transparent 70%);
+}
+
+.mesh-gradient {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(35, 80, 232, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(16, 190, 114, 0.08) 0%, transparent 50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

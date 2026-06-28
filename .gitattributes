@@ -1,0 +1,3 @@
+# Normaliza line endings automaticamente
+* text=auto eol=lf
+*.bat text eol=crlf
