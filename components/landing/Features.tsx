@@ -1,4 +1,5 @@
 import { Heart, MessageSquare, Search, Shield, BarChart3, Users } from 'lucide-react'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 
 const features = [
   {
@@ -41,57 +42,50 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-24 relative">
-      {/* Background divider line */}
+    <section className="py-32 relative">
       <div className="absolute inset-0 bg-[#0A0A0A]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p className="text-[#10BE72] font-semibold text-sm tracking-wider uppercase mb-3">Funcionalidades</p>
-          <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-[#F5F5F5] mb-4">
-            Tudo que você precisa para fazer
+        <ScrollReveal className="text-center mb-20">
+          <p className="text-[#10BE72] font-semibold text-sm tracking-wider uppercase mb-4">Funcionalidades</p>
+          <h2 className="text-5xl lg:text-6xl font-black tracking-tight text-[#F5F5F5] mb-6 leading-tight">
+            Tudo que você precisa para
             <br />
             <span className="gradient-text">o match certo</span>
           </h2>
-          <p className="text-[#888888] text-lg max-w-2xl mx-auto">
+          <p className="text-[#A0A0A0] text-lg max-w-2xl mx-auto leading-relaxed">
             Uma plataforma completa para conectar talentos, capital e ideias no ecossistema empreendedor.
           </p>
-        </div>
+        </ScrollReveal>
 
-        {/* Features grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map((feature) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, i) => {
             const Icon = feature.icon
             return (
-              <div
-                key={feature.title}
-                className="relative glass rounded-2xl p-6 card-hover group overflow-hidden"
-              >
-                {/* Background glow on hover */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
-                  style={{
-                    background: `radial-gradient(ellipse at 0% 0%, ${feature.color}08 0%, transparent 60%)`,
-                  }}
-                />
-
-                <div className="relative">
-                  {/* Icon */}
+              <ScrollReveal key={feature.title} delay={i * 80}>
+                <div className="relative glass rounded-2xl p-8 card-hover group overflow-hidden h-full">
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                    style={{ background: `${feature.color}15`, border: `1px solid ${feature.color}20` }}
-                  >
-                    <Icon size={20} style={{ color: feature.color }} />
-                  </div>
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at 0% 0%, ${feature.color}08 0%, transparent 60%)`,
+                    }}
+                  />
 
-                  {/* Content */}
-                  <h3 className="font-bold text-[#F5F5F5] mb-2">{feature.title}</h3>
-                  <p className="text-sm text-[#888888] leading-relaxed">{feature.description}</p>
+                  <div className="relative">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                      style={{ background: `${feature.color}15`, border: `1px solid ${feature.color}20` }}
+                    >
+                      <Icon size={22} style={{ color: feature.color }} />
+                    </div>
+
+                    <h3 className="font-bold text-[#F5F5F5] text-lg mb-3">{feature.title}</h3>
+                    <p className="text-sm text-[#888888] leading-relaxed">{feature.description}</p>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             )
           })}
         </div>

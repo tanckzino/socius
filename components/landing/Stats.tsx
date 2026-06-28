@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 
 const stats = [
   { value: 5247, suffix: '+', label: 'Usuários ativos', color: '#2350E8' },
@@ -41,25 +42,25 @@ function CountUp({ target, duration = 1500 }: { target: number; duration?: numbe
 
 export default function Stats() {
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#0A0A0A]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
 
-      {/* Background glow */}
-      <div className="absolute inset-0 opacity-30"
-        style={{ background: 'radial-gradient(ellipse 60% 80% at 50% 50%, rgba(35,80,232,0.1), transparent)' }}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{ background: 'radial-gradient(ellipse 60% 80% at 50% 50%, rgba(35,80,232,0.12), transparent)' }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-black text-4xl lg:text-5xl mb-2" style={{ color: stat.color }}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
+          {stats.map((stat, i) => (
+            <ScrollReveal key={stat.label} delay={i * 100} className="text-center">
+              <div className="font-black text-5xl lg:text-6xl mb-3" style={{ color: stat.color }}>
                 {stat.prefix}<CountUp target={stat.value} />{stat.suffix}
               </div>
-              <p className="text-[#888888] text-sm font-medium">{stat.label}</p>
-            </div>
+              <p className="text-[#A0A0A0] text-sm font-medium">{stat.label}</p>
+            </ScrollReveal>
           ))}
         </div>
       </div>

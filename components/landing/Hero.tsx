@@ -126,26 +126,26 @@ export default function Hero() {
           {/* Left: Text */}
           <div>
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2350E8]/10 border border-[#2350E8]/20 text-[#4169FF] text-xs font-semibold mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2350E8]/10 border border-[#2350E8]/20 text-[#4169FF] text-xs font-semibold mb-10">
               <span className="w-1.5 h-1.5 rounded-full bg-[#10BE72] animate-pulse" />
-              O Tinder dos negócios chegou ao Brasil
+              A plataforma de match do ecossistema empreendedor
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] mb-6">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[1.0] mb-8">
               <span className="text-[#F5F5F5]">Encontre seu</span>
               <br />
               <span className="gradient-text">próximo sócio.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg text-[#888888] leading-relaxed mb-8 max-w-lg">
+            <p className="text-xl text-[#A0A0A0] leading-relaxed mb-10 max-w-lg">
               A plataforma que conecta <strong className="text-[#F5F5F5]">founders, investidores e desenvolvedores</strong> para construir
               o futuro juntos. Dê um swipe e mude sua trajetória.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-3 mb-12">
+            <div className="flex flex-wrap gap-4 mb-14">
               <Link href="/register">
                 <Button size="lg" className="shadow-xl shadow-[#2350E8]/25">
                   Criar perfil grátis

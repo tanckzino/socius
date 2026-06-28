@@ -38,7 +38,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-[#888888] text-sm leading-relaxed mb-6 max-w-xs">
-              O Tinder dos negócios. Conectamos founders, investidores e desenvolvedores para construir o futuro.
+              Conectamos founders, investidores e desenvolvedores para construir o futuro juntos.
             </p>
             <div className="flex gap-3">
               {['Twitter', 'LinkedIn', 'Instagram'].map((social, i) => (

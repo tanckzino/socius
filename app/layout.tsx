@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'SociUS — Encontre seu próximo sócio',
   description:
-    'A plataforma que conecta founders, investidores e desenvolvedores para construir startups juntos. O Tinder dos negócios.',
+    'A plataforma de match que conecta founders, investidores e desenvolvedores para construir startups juntos.',
   keywords: ['startup', 'sócio', 'investimento', 'co-fundador', 'empreendedorismo', 'networking'],
   authors: [{ name: 'SociUS' }],
   openGraph: {
