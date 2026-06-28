@@ -38,28 +38,40 @@ const mockCards = [
   },
 ]
 
+// Pilha estilo Tinder: card da frente totalmente legível.
+// Rotação alternada ± pequena cria o visual de "baralho empilhado" sem vazar texto.
+// Fundo sólido é obrigatório — glass transparente vaza o conteúdo entre cards.
+const CARD_CONFIGS = [
+  { y: 0,  rotate: '0deg',  zIndex: 30, bg: '#1E1E1E' }, // frente: direto
+  { y: 6,  rotate: '3deg',  zIndex: 20, bg: '#191919' }, // meio: leve para direita
+  { y: 10, rotate: '-2deg', zIndex: 10, bg: '#161616' }, // fundo: leve para esquerda
+]
+
 function MiniSwipeCard({ card, index }: { card: typeof mockCards[0]; index: number }) {
-  const offsets = [
-    { rotate: '0deg', y: 0, scale: 1, z: 3 },
-    { rotate: '-4deg', y: 12, scale: 0.95, z: 2 },
-    { rotate: '-8deg', y: 22, scale: 0.90, z: 1 },
-  ]
-  const o = offsets[index]
+  const cfg = CARD_CONFIGS[index]
 
   return (
     <div
-      className="absolute w-full"
+      className="absolute top-0 left-0 w-full"
       style={{
-        transform: `rotate(${o.rotate}) translateY(${o.y}px) scale(${o.scale})`,
-        zIndex: o.z,
-        transformOrigin: 'bottom center',
+        transform: `translateY(${cfg.y}px) rotate(${cfg.rotate})`,
+        zIndex: cfg.zIndex,
+        transformOrigin: 'center center',
       }}
     >
-      <div className="glass-strong rounded-2xl p-5 shadow-2xl">
+      {/* Fundo opaco + altura mínima uniforme para o efeito de pilha funcionar */}
+      <div
+        className="rounded-2xl p-5 shadow-2xl"
+        style={{
+          minHeight: '300px',
+          background: cfg.bg,
+          border: '1px solid rgba(255,255,255,0.10)',
+        }}
+      >
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-base flex-shrink-0"
+            className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-base flex-shrink-0"
             style={{ background: `${card.color}25`, color: card.color, border: `1px solid ${card.color}30` }}
           >
             {card.initials}
@@ -67,43 +79,44 @@ function MiniSwipeCard({ card, index }: { card: typeof mockCards[0]; index: numb
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
               <p className="font-semibold text-[#F5F5F5] text-sm truncate">{card.name}</p>
-              <span
-                className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
-                style={{ background: `${card.color}20`, color: card.color }}
-              >
-                {card.score}%
-              </span>
+              {index === 0 && (
+                <span
+                  className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                  style={{ background: `${card.color}20`, color: card.color }}
+                >
+                  {card.score}%
+                </span>
+              )}
             </div>
             <p className="text-xs text-[#888888] mt-0.5">{card.role} · {card.city}</p>
           </div>
         </div>
 
-        {/* Bio */}
+        {/* Conteúdo completo apenas no card da frente */}
         {index === 0 && (
-          <p className="text-xs text-[#888888] mb-3 leading-relaxed line-clamp-2">{card.bio}</p>
-        )}
+          <>
+            <p className="text-xs text-[#888888] mb-3 leading-relaxed line-clamp-2">{card.bio}</p>
 
-        {/* Skills */}
-        {index === 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {card.skills.map((s) => (
-              <span key={s} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/6 text-[#888888] border border-white/8">
-                {s}
-              </span>
-            ))}
-          </div>
-        )}
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {card.skills.map((s) => (
+                <span
+                  key={s}
+                  className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/6 text-[#888888] border border-white/8"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
 
-        {/* Actions */}
-        {index === 0 && (
-          <div className="flex gap-2">
-            <button className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 hover:bg-[#EF4444]/20 transition-colors">
-              ✕ Passar
-            </button>
-            <button className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#10BE72]/10 text-[#10BE72] border border-[#10BE72]/20 hover:bg-[#10BE72]/20 transition-colors">
-              ♥ Curtir
-            </button>
-          </div>
+            <div className="flex gap-2">
+              <button className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 hover:bg-[#EF4444]/20 transition-colors">
+                ✕ Passar
+              </button>
+              <button className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#10BE72]/10 text-[#10BE72] border border-[#10BE72]/20 hover:bg-[#10BE72]/20 transition-colors">
+                ♥ Curtir
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
@@ -125,26 +138,23 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: Text */}
           <div>
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2350E8]/10 border border-[#2350E8]/20 text-[#4169FF] text-xs font-semibold mb-10">
               <span className="w-1.5 h-1.5 rounded-full bg-[#10BE72] animate-pulse" />
               A plataforma de match do ecossistema empreendedor
             </div>
 
-            {/* Headline */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[1.0] mb-8">
               <span className="text-[#F5F5F5]">Encontre seu</span>
               <br />
               <span className="gradient-text">próximo sócio.</span>
             </h1>
 
-            {/* Subheadline */}
             <p className="text-xl text-[#A0A0A0] leading-relaxed mb-10 max-w-lg">
-              A plataforma que conecta <strong className="text-[#F5F5F5]">founders, investidores e desenvolvedores</strong> para construir
-              o futuro juntos. Dê um swipe e mude sua trajetória.
+              A plataforma que conecta{' '}
+              <strong className="text-[#F5F5F5]">founders, investidores e desenvolvedores</strong>{' '}
+              para construir o futuro juntos. Dê um swipe e mude sua trajetória.
             </p>
 
-            {/* CTAs */}
             <div className="flex flex-wrap gap-4 mb-14">
               <Link href="/register">
                 <Button size="lg" className="shadow-xl shadow-[#2350E8]/25">
@@ -159,7 +169,6 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Trust indicators */}
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2 text-sm text-[#888888]">
                 <Zap size={14} className="text-[#10BE72]" />
@@ -177,22 +186,31 @@ export default function Hero() {
           </div>
 
           {/* Right: Swipe card mockup */}
-          <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-xs mx-auto lg:mx-0" style={{ height: '340px' }}>
+          <div className="flex items-center justify-center lg:justify-end">
+            {/* Container com altura fixa — acomoda o card da frente + espiada dos cards de trás */}
+            <div className="relative w-full max-w-xs mx-auto lg:mx-0" style={{ height: '360px' }}>
               {[...mockCards].reverse().map((card, reverseIndex) => {
                 const index = mockCards.length - 1 - reverseIndex
                 return <MiniSwipeCard key={card.name} card={card} index={index} />
               })}
-            </div>
 
-            {/* Floating stats */}
-            <div className="absolute -left-4 top-8 glass rounded-xl px-3 py-2.5 shadow-xl hidden lg:block">
-              <p className="text-[10px] text-[#888888] mb-0.5">Match realizado!</p>
-              <p className="text-xs font-semibold text-[#10BE72]">♥ Rafael + Ana</p>
-            </div>
-            <div className="absolute -right-2 bottom-12 glass rounded-xl px-3 py-2.5 shadow-xl hidden lg:block">
-              <p className="text-[10px] text-[#888888] mb-0.5">Compatibilidade</p>
-              <p className="text-sm font-black text-[#F5F5F5]">94%</p>
+              {/* Badge "Match realizado!" — flutua à esquerda do card */}
+              <div
+                className="absolute top-6 glass rounded-xl px-3 py-2.5 shadow-xl hidden lg:block"
+                style={{ left: '-7rem', zIndex: 40 }}
+              >
+                <p className="text-[10px] text-[#888888] mb-0.5">Match realizado!</p>
+                <p className="text-xs font-semibold text-[#10BE72]">♥ Rafael + Ana</p>
+              </div>
+
+              {/* Badge "Compatibilidade 94%" — flutua à direita/baixo do card */}
+              <div
+                className="absolute bottom-10 glass rounded-xl px-3 py-2.5 shadow-xl hidden lg:block"
+                style={{ right: '-5rem', zIndex: 40 }}
+              >
+                <p className="text-[10px] text-[#888888] mb-0.5">Compatibilidade</p>
+                <p className="text-sm font-black text-[#F5F5F5]">94%</p>
+              </div>
             </div>
           </div>
         </div>
